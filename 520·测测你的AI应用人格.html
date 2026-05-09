@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>520 · 测测你的AI应用人格</title>
+<style>
+:root {
+  --bg: #fff5f5;
+  --bg-card: #ffffff;
+  --bg-card-hover: #fff0f0;
+  --text: #4a3040;
+  --text-secondary: #8b6070;
+  --text-muted: #b89098;
+  --accent: #ff6b81;
+  --accent-light: #ff8fa3;
+  --accent-glow: #ff6b8140;
+  --accent2: #d4838f;
+  --accent2-glow: #d4838f40;
+  --gold: #e8a860;
+  --gold-glow: #e8a86033;
+  --border: #f0d8e0;
+  --border-active: #ff6b8155;
+  --radius: 20px;
+  --radius-sm: 14px;
+  --font-display: 'Georgia', 'Noto Serif SC', 'STSong', serif;
+  --font-body: 'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans GB', sans-serif;
+  --shadow-card: 0 4px 24px rgba(255, 107, 129, 0.08), 0 1px 4px rgba(180, 100, 120, 0.06);
+  --shadow-card-hover: 0 8px 32px rgba(255, 107, 129, 0.14), 0 2px 8px rgba(180, 100, 120, 0.08);
+  --shadow-btn: 0 6px 24px rgba(255, 107, 129, 0.35);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: var(--font-body);
+  background: linear-gradient(170deg, #fff5f5 0%, #ffe8e8 30%, #fff0f5 60%, #fce4ec 100%);
+  background-attachment: fixed;
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: '';
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: 
+    radial-gradient(ellipse at 20% 10%, rgba(255, 182, 193, 0.2) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 90%, rgba(255, 107, 129, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(255, 218, 185, 0.15) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+#particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+.particle { position: absolute; animation: floatUp linear infinite; opacity: 0; font-size: 14px; }
+@keyframes floatUp {
+  0% { transform: translateY(100vh) scale(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.7; }
+  90% { opacity: 0.7; }
+  100% { transform: translateY(-10vh) scale(1) rotate(360deg); opacity: 0; }
+}
+.app-container { position: relative; z-index: 1; max-width: 480px; margin: 0 auto; min-height: 100vh; padding: 20px 16px 40px; }
+.page { display: none; animation: pageIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.page.active { display: block; }
+@keyframes pageIn { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+/* 首页 */
+.hero { text-align: center; padding: 48px 0 24px; }
+.hero-icon { font-size: 80px; animation: heartbeat 1.2s ease-in-out infinite; display: inline-block; filter: drop-shadow(0 4px 16px rgba(255, 107, 129, 0.3)); }
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  14% { transform: scale(1.18); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.1); }
+  56% { transform: scale(1); }
+}
+.hero-title { font-family: var(--font-display); font-size: 28px; font-weight: 700; margin: 16px 0 10px; background: linear-gradient(135deg, #ff6b81, #e8738a, #d4838f, #ff8fa3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1.5; }
+.hero-subtitle { font-size: 15px; color: var(--text-secondary); margin-bottom: 8px; letter-spacing: 2px; }
+.hero-desc { font-size: 13px; color: var(--text-muted); line-height: 1.8; margin-bottom: 32px; }
+.btn-primary {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 15px 42px; font-size: 17px; font-weight: 600; color: #fff;
+  background: linear-gradient(135deg, #ff6b81, #e85d75); border: none;
+  border-radius: 50px; cursor: pointer; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: var(--shadow-btn); letter-spacing: 1px;
+}
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 36px rgba(255, 107, 129, 0.42); }
+.btn-primary:active { transform: scale(0.96); }
+.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
+.btn-secondary {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 12px 28px; font-size: 14px; font-weight: 500; color: var(--accent);
+  background: #fff; border: 1.5px solid var(--border);
+  border-radius: 50px; cursor: pointer; transition: all 0.3s;
+}
+.btn-secondary:hover { border-color: var(--accent); background: #fff5f7; color: #e85d75; }
+.features { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 24px 0; }
+.feature-item { 
+  background: var(--bg-card); border: 1.5px solid var(--border); 
+  border-radius: var(--radius-sm); padding: 16px; text-align: center; 
+  transition: all 0.3s; box-shadow: var(--shadow-card);
+}
+.feature-item:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow-card-hover); }
+.feature-icon { font-size: 28px; margin-bottom: 6px; }
+.feature-label { font-size: 12px; color: var(--text-secondary); }
+
+/* 答题页 */
+.quiz-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.quiz-back { width: 38px; height: 38px; border-radius: 50%; background: var(--bg-card); border: 1.5px solid var(--border); color: var(--text-secondary); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+.quiz-back:hover { border-color: var(--accent); color: var(--accent); }
+.progress-wrap { flex: 1; height: 8px; background: #fce4ec; border-radius: 4px; overflow: hidden; }
+.progress-bar { height: 100%; background: linear-gradient(90deg, #ff6b81, #ff8fa3, #ffb6c1); border-radius: 4px; transition: width 0.4s ease; box-shadow: 0 0 8px rgba(255, 107, 129, 0.25); }
+.progress-text { font-size: 13px; color: var(--text-secondary); min-width: 48px; text-align: right; }
+.question-card { background: var(--bg-card); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 28px 24px; margin-bottom: 16px; transition: all 0.3s; box-shadow: var(--shadow-card); }
+.question-section-label { display: inline-block; font-size: 11px; color: #fff; background: linear-gradient(135deg, #ff6b81, #ff8fa3); padding: 5px 14px; border-radius: 20px; margin-bottom: 16px; letter-spacing: 1px; }
+.question-text { font-family: var(--font-display); font-size: 20px; font-weight: 600; line-height: 1.6; margin-bottom: 24px; color: #4a3040; }
+.options-list { display: flex; flex-direction: column; gap: 10px; }
+.option-btn {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 16px 18px; background: #fffafb; border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm); cursor: pointer; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  text-align: left; color: var(--text); font-size: 14px; line-height: 1.5;
+}
+.option-btn:hover { border-color: var(--accent-light); background: #fff5f7; transform: translateX(4px); box-shadow: 0 4px 16px rgba(255, 107, 129, 0.08); }
+.option-btn.selected { border-color: var(--accent); background: linear-gradient(135deg, #fff0f4, #ffe8ee); box-shadow: 0 0 24px var(--accent-glow); }
+.option-emoji { font-size: 24px; flex-shrink: 0; width: 32px; text-align: center; padding-top: 2px; }
+.option-content { flex: 1; }
+.option-label { font-weight: 600; margin-bottom: 2px; color: #4a3040; }
+.option-desc { font-size: 12px; color: var(--text-muted); }
+.quiz-nav { display: flex; gap: 12px; margin-top: 8px; }
+.quiz-nav .btn-primary { flex: 1; }
+
+/* 结果页 */
+.result-header { text-align: center; padding: 24px 0; }
+.result-badge { display: inline-block; font-size: 12px; color: #fff; background: linear-gradient(135deg, #ff6b81, #ff8fa3); padding: 6px 18px; border-radius: 20px; letter-spacing: 2px; margin-bottom: 16px; box-shadow: 0 4px 12px rgba(255, 107, 129, 0.25); }
+.result-personality-icon { font-size: 88px; animation: heartbeat 2s ease-in-out infinite; display: block; margin: 16px auto; filter: drop-shadow(0 4px 16px rgba(255, 107, 129, 0.2)); }
+.result-code { font-family: var(--font-display); font-size: 38px; font-weight: 700; letter-spacing: 6px; background: linear-gradient(135deg, #e8a860, #ff6b81, #d4838f); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.result-name { font-size: 22px; font-weight: 600; margin: 10px 0; color: #4a3040; }
+.result-tagline { font-size: 14px; color: var(--text-secondary); font-style: italic; margin-bottom: 8px; }
+
+/* 维度条 */
+.dimensions-card { background: var(--bg-card); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 22px; margin-bottom: 16px; box-shadow: var(--shadow-card); }
+.dimensions-title { font-size: 13px; color: var(--text-muted); letter-spacing: 2px; margin-bottom: 16px; text-align: center; }
+.dimension-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.dimension-label { font-size: 12px; color: var(--text-secondary); width: 56px; text-align: right; flex-shrink: 0; }
+.dimension-bar-wrap { flex: 1; height: 10px; background: #fce4ec; border-radius: 5px; overflow: hidden; position: relative; }
+.dimension-bar { height: 100%; border-radius: 5px; transition: width 1.2s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.dimension-bar.ip { background: linear-gradient(90deg, #ff6b81, #ff8fa3); }
+.dimension-bar.sd { background: linear-gradient(90deg, #ff8fa3, #e8a860); }
+.dimension-bar.ef { background: linear-gradient(90deg, #d4838f, #c0847c); }
+.dimension-bar.ac { background: linear-gradient(90deg, #e8a860, #ffb6c1); }
+.dimension-pct { font-size: 12px; color: var(--text-secondary); width: 36px; flex-shrink: 0; }
+.dimension-ends { display: flex; justify-content: space-between; font-size: 10px; color: var(--text-muted); padding: 0 56px 0 66px; margin-top: -8px; margin-bottom: 12px; }
+.dimension-note { font-size: 11px; color: var(--accent); text-align: center; margin-top: 4px; font-style: italic; }
+
+/* 风格画像卡片 */
+.profile-card { 
+  background: linear-gradient(135deg, #fff8f9, #fff0f4); 
+  border: 1.5px solid var(--border); border-radius: var(--radius); 
+  padding: 24px; margin-bottom: 16px; position: relative; overflow: hidden; 
+  box-shadow: 0 2px 16px rgba(255, 107, 129, 0.06);
+}
+.profile-card::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle at 30% 20%, rgba(255, 107, 129, 0.05), transparent 50%), radial-gradient(circle at 70% 80%, rgba(232, 168, 96, 0.04), transparent 50%); }
+.profile-title { font-size: 13px; color: var(--accent); letter-spacing: 2px; margin-bottom: 12px; position: relative; }
+.profile-content { font-size: 14px; line-height: 1.9; color: var(--text-secondary); position: relative; }
+
+/* 搭子推荐 */
+.partner-card, .tools-card { background: var(--bg-card); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 22px; margin-bottom: 16px; box-shadow: var(--shadow-card); }
+.partner-title, .tools-title { font-size: 13px; color: var(--text-muted); letter-spacing: 2px; margin-bottom: 16px; text-align: center; }
+.partner-pair { display: flex; align-items: center; justify-content: center; gap: 12px; }
+.partner-person { text-align: center; flex: 1; }
+.partner-person-icon { font-size: 44px; display: block; margin-bottom: 4px; }
+.partner-person-code { font-size: 14px; font-weight: 700; color: var(--text); }
+.partner-person-name { font-size: 12px; color: var(--text-secondary); }
+.partner-person-desc { font-size: 11px; color: var(--text-muted); margin-top: 4px; line-height: 1.4; }
+.partner-arrow { font-size: 24px; color: var(--accent); animation: pulse 1.5s ease-in-out infinite; flex-shrink: 0; }
+.partner-reason { font-size: 12px; color: var(--text-secondary); text-align: center; margin-top: 12px; line-height: 1.6; font-style: italic; }
+@keyframes pulse { 0%, 100% { opacity: 0.5; transform: scale(1); } 50% { opacity: 1; transform: scale(1.2); } }
+
+/* 成长建议 */
+.guide-card { background: var(--bg-card); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 22px; margin-bottom: 16px; box-shadow: var(--shadow-card); }
+.guide-title { font-size: 13px; color: var(--text-muted); letter-spacing: 2px; margin-bottom: 12px; text-align: center; }
+.guide-content { font-size: 13px; line-height: 1.9; color: var(--text-secondary); }
+
+/* 用户信息 */
+.user-info-card { background: var(--bg-card); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 16px; box-shadow: var(--shadow-card); }
+.user-info-card input {
+  background: #fffafb; border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  color: var(--text); font-size: 14px; outline: none; transition: all 0.3s;
+}
+.user-info-card input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+
+/* 底部操作 */
+.result-actions { display: flex; gap: 10px; margin-top: 8px; flex-wrap: wrap; }
+.result-actions .btn-primary { flex: 1; min-width: 120px; }
+.result-actions .btn-secondary { flex: 1; min-width: 100px; }
+
+/* 分享弹窗 */
+.modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(60, 20, 30, 0.6); backdrop-filter: blur(8px); z-index: 100; align-items: center; justify-content: center; }
+.modal-overlay.active { display: flex; }
+.modal-content { background: var(--bg-card); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 28px; max-width: 400px; width: 90%; text-align: center; box-shadow: 0 24px 64px rgba(255, 107, 129, 0.12); }
+.modal-close { float: right; background: none; border: none; color: var(--text-muted); font-size: 24px; cursor: pointer; transition: color 0.2s; }
+.modal-close:hover { color: var(--accent); }
+.poster-preview { background: linear-gradient(135deg, #fff5f7, #ffe8ee); border-radius: var(--radius-sm); padding: 28px; margin: 16px 0; border: 1.5px solid var(--border); }
+.poster-icon { font-size: 52px; }
+.poster-code { font-size: 28px; font-weight: 700; letter-spacing: 3px; margin: 8px 0; background: linear-gradient(135deg, #e8a860, #ff6b81); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.poster-name { font-size: 18px; color: var(--text-secondary); }
+.poster-qr { margin-top: 12px; font-size: 11px; color: var(--text-muted); }
+
+/* Toast */
+.toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #fff; border: 1.5px solid var(--border); color: var(--text); padding: 14px 28px; border-radius: 50px; font-size: 14px; z-index: 200; opacity: 0; transition: all 0.3s; pointer-events: none; box-shadow: 0 8px 32px rgba(255, 107, 129, 0.15); }
+.toast.show { opacity: 1; }
+
+/* 管理面板 */
+.admin-panel { background: var(--bg-card); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 20px; margin-top: 24px; box-shadow: var(--shadow-card); }
+.admin-title { font-size: 14px; color: var(--text-muted); letter-spacing: 2px; margin-bottom: 16px; text-align: center; }
+.admin-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+.admin-stat { background: #fffafb; border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 12px; text-align: center; }
+.admin-stat-num { font-size: 24px; font-weight: 700; color: var(--accent); }
+.admin-stat-label { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+.admin-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.admin-actions .btn-secondary { flex: 1; min-width: 100px; font-size: 12px; padding: 10px 16px; }
+
+@media (max-width: 360px) {
+  .hero-title { font-size: 24px; }
+  .question-text { font-size: 17px; }
+  .result-code { font-size: 28px; }
+}
+</style>
+</head>
+<body>
+<div id="particles"></div>
+<div class="toast" id="toast"></div>
+
+<div class="app-container" id="app">
+
+  <!-- 首页 -->
+  <div class="page active" id="page-home">
+    <div class="hero">
+      <div class="hero-icon">🧠</div>
+      <h1 class="hero-title">520 · 测测你的<br>AI应用人格</h1>
+      <p class="hero-subtitle">你和AI的日常，自带什么风格Buff？</p>
+      <p class="hero-desc">20道情景选择题 · 16种AI应用人格<br>发现你的AI协作风格，找到最适合你的工作方式</p>
+    </div>
+    <div class="features">
+      <div class="feature-item"><div class="feature-icon">🎯</div><div class="feature-label">4维人格模型</div></div>
+      <div class="feature-item"><div class="feature-icon">🧩</div><div class="feature-label">16型应用人格</div></div>
+      <div class="feature-item"><div class="feature-icon">💡</div><div class="feature-label">风格画像解读</div></div>
+      <div class="feature-item"><div class="feature-icon">📈</div><div class="feature-label">个性化成长建议</div></div>
+    </div>
+    <div style="text-align:center">
+      <button class="btn-primary" onclick="startQuiz()">🧠 开始测评</button>
+      <p style="margin-top:12px;font-size:11px;color:var(--text-muted)">约2分钟 · 20道趣味情景题</p>
+    </div>
+  </div>
+
+  <!-- 答题页 -->
+  <div class="page" id="page-quiz">
+    <div class="quiz-header">
+      <button class="quiz-back" onclick="prevQuestion()" id="btn-back" style="visibility:hidden">←</button>
+      <div class="progress-wrap"><div class="progress-bar" id="progress-bar" style="width:0%"></div></div>
+      <span class="progress-text" id="progress-text">1/20</span>
+    </div>
+    <div class="question-card" id="question-card">
+      <div class="question-section-label" id="question-section"></div>
+      <div class="question-text" id="question-text"></div>
+      <div class="options-list" id="options-list"></div>
+    </div>
+    <div class="quiz-nav" style="display:none"></div>
+  </div>
+
+  <!-- 结果页 -->
+  <div class="page" id="page-result">
+    <div class="result-header">
+      <div class="result-badge">🧠 520 · 测测你的AI应用人格</div>
+      <span class="result-personality-icon" id="result-icon"></span>
+      <div class="result-code" id="result-code"></div>
+      <div class="result-name" id="result-name"></div>
+      <div class="result-tagline" id="result-tagline"></div>
+
+    </div>
+    <div class="dimensions-card">
+      <div class="dimensions-title">📊 你的AI应用风格维度</div>
+      <div id="dimensions-container"></div>
+    </div>
+    <div class="profile-card">
+      <div class="profile-title">💡 你的风格画像</div>
+      <div class="profile-content" id="profile-content"></div>
+    </div>
+    <div class="tools-card" id="partner-card">
+      <div class="tools-title">🤝 你的AI搭子推荐</div>
+      <div id="partner-content"></div>
+    </div>
+    <div class="guide-card">
+      <div class="guide-title">📈 成长建议</div>
+      <div class="guide-content" id="guide-content"></div>
+    </div>
+    <!-- 用户信息收集 -->
+    <div class="user-info-card" style="background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px;box-shadow:var(--shadow-card)">
+      <div style="font-size:13px;color:var(--text-muted);letter-spacing:2px;margin-bottom:16px;text-align:center;">📝 记录你的测评结果（可选）</div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <input type="text" id="user-name" placeholder="请输入你的姓名" style="padding:12px 16px;background:#fffafb;border:1.5px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:14px;outline:none;transition:all 0.3s;" onfocus="this.style.borderColor='var(--accent)';this.style.boxShadow='0 0 0 3px var(--accent-glow)'" onblur="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
+        <input type="text" id="user-dept" placeholder="请输入你的部门（可选）" style="padding:12px 16px;background:#fffafb;border:1.5px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:14px;outline:none;transition:all 0.3s;" onfocus="this.style.borderColor='var(--accent)';this.style.boxShadow='0 0 0 3px var(--accent-glow)'" onblur="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
+      </div>
+    </div>
+
+    <div class="result-actions">
+      <button class="btn-primary" onclick="submitToSurvey()">📋 提交结果 · 自动复制到问卷</button>
+      <button class="btn-primary" onclick="shareResult()" style="background:linear-gradient(135deg,#e8a860,#ff8fa3);box-shadow:var(--shadow-btn)">📤 生成分享海报</button>
+      <button class="btn-secondary" onclick="retakeQuiz()">🔄 再测一次</button>
+    </div>
+
+    <!-- 管理面板（连续点击结果页标题5次打开） -->
+    <div class="admin-panel" id="admin-panel" style="display:none">
+      <div class="admin-title">📊 数据管理</div>
+      <div class="admin-stats">
+        <div class="admin-stat"><div class="admin-stat-num" id="stat-total">0</div><div class="admin-stat-label">本机累计测评次数</div></div>
+        <div class="admin-stat"><div class="admin-stat-num" id="stat-types">0</div><div class="admin-stat-label">出现人格类型</div></div>
+      </div>
+      <div class="admin-actions">
+        <button class="btn-secondary" onclick="exportCSV()">📥 导出CSV</button>
+        <button class="btn-secondary" onclick="exportJSON()">📥 导出JSON</button>
+        <button class="btn-secondary" onclick="clearData()">🗑️ 清除本地数据</button>
+      </div>
+      <p style="font-size:11px;color:var(--text-muted);margin-top:12px;text-align:center">提示：数据仅保存在当前浏览器中，不同设备/浏览器数据独立</p>
+    </div>
+  </div>
+
+  <!-- 分享弹窗 -->
+  <div class="modal-overlay" id="modal-share">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeShareModal()">✕</button>
+      <h3 style="margin-bottom:8px">📤 分享你的AI应用人格</h3>
+      <div class="poster-preview" id="poster-preview">
+        <div class="poster-icon" id="poster-icon"></div>
+        <div class="poster-code" id="poster-code"></div>
+        <div class="poster-name" id="poster-name"></div>
+        <div class="poster-qr">扫码来测测你的AI应用人格 →</div>
+      </div>
+      <button class="btn-primary" onclick="copyShareText()" style="width:100%">📋 复制分享文案</button>
+      <button class="btn-secondary" onclick="closeShareModal()" style="width:100%;margin-top:8px">关闭</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ==================== 20道题目（每題4选项 · 穿插排列 · 精简版） ====================
+const questions = [
+  // Q1 · I/P
+  { id:1, section:'💕 开场', text:'凌晨2点赶方案，脑子卡壳了，你打开AI——', options:[
+    {emoji:'🎢', label:'"救命！这个排期怎么排都不对"', desc:'上来先吐槽，边聊边理思路', dim:'IP', val:1},
+    {emoji:'🧭', label:'"大概是这个方向，你帮我想想"', desc:'给个模糊方向，慢慢聊清楚', dim:'IP', val:2},
+    {emoji:'📋', label:'"我要一份方案，包含这几个部分"', desc:'先列大纲，让它往里填', dim:'IP', val:3},
+    {emoji:'📐', label:'"请按以下结构输出，每部分不超过300字"', desc:'精准定义格式和边界', dim:'IP', val:4}
+  ]},
+  // Q2 · S/D
+  { id:2, section:'💕 开场', text:'AI交出来的东西跟你想要的完全是两个东西，你：', options:[
+    {emoji:'🔄', label:'换个AI工具试试，不同模型擅长的不一样', desc:'快速切换', dim:'SD', val:1},
+    {emoji:'🔀', label:'换个角度重新问，可能是我问法不对', desc:'调整提问方式', dim:'SD', val:2},
+    {emoji:'🔧', label:'补充更多背景和约束，调整提示词再试', desc:'优化指令', dim:'SD', val:3},
+    {emoji:'🔬', label:'逐条分析哪里跑偏了，从提示词到参数逐步优化', desc:'深度排查', dim:'SD', val:4}
+  ]},
+  // Q3 · E/F
+  { id:3, section:'💕 开场', text:'打开浏览器收藏夹，数数AI相关的书签——', options:[
+    {emoji:'🌐', label:'数不清了，看到新的就忍不住收藏', desc:'多多益善', dim:'EF', val:1},
+    {emoji:'🎭', label:'十几个，不同场景配不同工具', desc:'各取所长', dim:'EF', val:2},
+    {emoji:'🎯', label:'五六个，核心场景够用就行', desc:'够用就好', dim:'EF', val:3},
+    {emoji:'💎', label:'两三个，精挑细选深度磨合的', desc:'少而精', dim:'EF', val:4}
+  ]},
+  // Q4 · A/C
+  { id:4, section:'💕 开场', text:'AI给的建议和你的直觉判断完全相反，你：', options:[
+    {emoji:'👑', label:'坚持自己的判断，AI不了解完整上下文', desc:'我主导', dim:'AC', val:1},
+    {emoji:'⚖️', label:'先看它的依据，有理就参考，没理按自己的来', desc:'参考但决策在我', dim:'AC', val:2},
+    {emoji:'🤔', label:'认真琢磨它的逻辑，试着从它的角度想一想', desc:'开放思考', dim:'AC', val:3},
+    {emoji:'🧪', label:'先假设它有道理，两个方案放一起对比推演', desc:'深度碰撞', dim:'AC', val:4}
+  ]},
+  // Q5 · I/P
+  { id:5, section:'💕 开场', text:'让AI帮你策划一个项目方案，你第一句话是——', options:[
+    {emoji:'🎲', label:'"主题是XXX，你自由发挥"', desc:'越有创意越好', dim:'IP', val:1},
+    {emoji:'🏗️', label:'"大方向是XXX，你先搭个框架"', desc:'边聊边调', dim:'IP', val:2},
+    {emoji:'📝', label:'"按这个提纲来，逐块填内容"', desc:'给详细提纲', dim:'IP', val:3},
+    {emoji:'🔧', label:'"严格按以下结构输出，每部分包含XX数据"', desc:'精准交代', dim:'IP', val:4}
+  ]},
+  // Q6 · S/D
+  { id:6, section:'🔄 磨合', text:'为一个复杂任务，你愿意和AI来回几轮？', options:[
+    {emoji:'⚡', label:'2-3轮，快速试几个角度，哪个对路走哪个', desc:'快速收敛', dim:'SD', val:1},
+    {emoji:'🔄', label:'5轮左右，给几次调整机会，不行就换策略', desc:'适度调整', dim:'SD', val:2},
+    {emoji:'🎯', label:'不超过10轮，愿意花时间调，但会设节点收束', desc:'有耐心有边界', dim:'SD', val:3},
+    {emoji:'🌱', label:'没有预设，有时候调着调着能发现更好的解法', desc:'乐在其中', dim:'SD', val:4}
+  ]},
+  // Q7 · E/F
+  { id:7, section:'🌐 工具', text:'同事群都在转一个新出的AI工具，看起来很厉害，你：', options:[
+    {emoji:'🔥', label:'"链接发我！"立刻上手，第一时间搞清楚它强在哪', desc:'立刻尝鲜', dim:'EF', val:1},
+    {emoji:'📥', label:'先收藏，这周找时间集中玩玩', desc:'稍后体验', dim:'EF', val:2},
+    {emoji:'🧐', label:'先看大家的真实反馈和对比评测，确认有价值再入坑', desc:'先观望再决定', dim:'EF', val:3},
+    {emoji:'😴', label:'先观望，现有的已经磨合得很好，等它被验证了再说', desc:'稳健派', dim:'EF', val:4}
+  ]},
+  // Q8 · A/C
+  { id:8, section:'🤝 关系', text:'你和AI协作完成了一个很出彩的交付，你觉得：', options:[
+    {emoji:'🧠', label:'AI帮我省了大量时间，但核心判断和方向是我做的', desc:'AI是高效工具', dim:'AC', val:1},
+    {emoji:'⌨️', label:'各司其职，我负责策略决策，AI负责把想法变成成品', desc:'明确分工', dim:'AC', val:2},
+    {emoji:'💡', label:'AI在过程中给了几个关键启发，实打实影响了方案走向', desc:'有实质贡献', dim:'AC', val:3},
+    {emoji:'🔗', label:'深度碰撞出来的，它的输出影响了我的思路，我的反馈又塑造了它', desc:'共创成果', dim:'AC', val:4}
+  ]},
+  // Q9 · I/P
+  { id:9, section:'💕 灵感', text:'AI的什么表现最让你觉得"这个回答有点东西"？', options:[
+    {emoji:'🤯', label:'说了一个我完全没想到的角度', desc:'打开了新世界', dim:'IP', val:1},
+    {emoji:'🚀', label:'在我想法的基础上，延展出了更大胆的方向', desc:'激发灵感', dim:'IP', val:2},
+    {emoji:'✨', label:'把我脑子里模糊的感觉，清晰漂亮地表达出来了', desc:'精准表达', dim:'IP', val:3},
+    {emoji:'🎁', label:'拿来就能直接用，格式、逻辑、细节全部到位', desc:'开箱即用', dim:'IP', val:4}
+  ]},
+  // Q10 · S/D
+  { id:10, section:'🔄 磨合', text:'AI在一个重要任务上出了明显偏差，之后你：', options:[
+    {emoji:'🔀', label:'更注重选对工具和问法，不同任务匹配不同方式', desc:'优化匹配', dim:'SD', val:1},
+    {emoji:'👀', label:'重要任务先让AI出初稿，我一定自己过一遍关键内容', desc:'人工把关', dim:'SD', val:2},
+    {emoji:'🔧', label:'复盘指令哪里不够清晰，针对性调整提示策略', desc:'优化指令', dim:'SD', val:3},
+    {emoji:'🛡️', label:'给关键任务加检查步骤和约束条件，让输出更可控', desc:'建立防线', dim:'SD', val:4}
+  ]},
+  // Q11 · E/F
+  { id:11, section:'🌐 工具', text:'你深度使用的AI工具，突然有了一个明显更强的竞品：', options:[
+    {emoji:'👋', label:'无缝切换，哪个好用就用哪个', desc:'工具就是拿来用的', dim:'EF', val:1},
+    {emoji:'🔙', label:'"现任"主力用，"前任"某些独特场景偶尔回去', desc:'各有各的好', dim:'EF', val:2},
+    {emoji:'🚛', label:'慢慢过渡，重要数据和习惯逐步迁移', desc:'稳步切换', dim:'EF', val:3},
+    {emoji:'🏰', label:'继续用"前任"，深度磨合的效率不是参数能替代的', desc:'深度绑定', dim:'EF', val:4}
+  ]},
+  // Q12 · A/C
+  { id:12, section:'🤝 关系', text:'假设所有AI服务暂停一个月，你的工作：', options:[
+    {emoji:'📊', label:'节奏受影响，但核心决策和判断不受影响', desc:'影响有限', dim:'AC', val:1},
+    {emoji:'🔄', label:'部分工作流需要重新适应，替代方案很快能搭起来', desc:'可快速恢复', dim:'AC', val:2},
+    {emoji:'⚡', label:'效率明显下降，已经习惯AI处理大量执行层工作', desc:'依赖较深', dim:'AC', val:3},
+    {emoji:'🆘', label:'影响很深，思考方式和问题拆解已和AI深度交织', desc:'深度依赖', dim:'AC', val:4}
+  ]},
+  // Q13 · I/P 🔍验证题
+  { id:13, section:'💕 灵感', text:'让AI帮你策划项目方案，你的做法接近：', options:[
+    {emoji:'🎲', label:'"主题是XXX，你自由发挥"——让它给我惊喜', desc:'自由探索', dim:'IP', val:1},
+    {emoji:'🏗️', label:'给几个关键词和大方向，让它搭框架再讨论', desc:'半结构化', dim:'IP', val:2},
+    {emoji:'📝', label:'给详细提纲，让它逐块填充内容', desc:'结构化推进', dim:'IP', val:3},
+    {emoji:'🔧', label:'把每部分要写什么、用什么逻辑、什么格式都交代清楚', desc:'精准控制', dim:'IP', val:4}
+  ]},
+  // Q14 · S/D
+  { id:14, section:'🔄 磨合', text:'回头看这半年，你用AI的方式：', options:[
+    {emoji:'🎨', label:'跟刚开始差不多，freestyle，每次凭感觉来', desc:'保持随性', dim:'SD', val:1},
+    {emoji:'📌', label:'形成了一些习惯用法，但没刻意整理', desc:'自然形成', dim:'SD', val:2},
+    {emoji:'🗂️', label:'高频场景积累了一批固定套路，效率上来了', desc:'有意识积累', dim:'SD', val:3},
+    {emoji:'📚', label:'建立了持续迭代的提示词体系，有记录有复盘', desc:'系统化管理', dim:'SD', val:4}
+  ]},
+  // Q15 · E/F
+  { id:15, section:'🌐 工具', text:'同事问"有什么好用的AI工具推荐吗"，你：', options:[
+    {emoji:'🛒', label:'一口气推荐好几个，按不同需求贴好标签', desc:'广撒网推荐', dim:'EF', val:1},
+    {emoji:'🎣', label:'推荐2-3个我觉得不错的，让他自己上手感受', desc:'给几个选项', dim:'EF', val:2},
+    {emoji:'🎯', label:'先问清楚他想解决什么问题，再精准推荐最匹配的', desc:'精准匹配', dim:'EF', val:3},
+    {emoji:'💪', label:'强烈安利我深度使用的那个，因为真的吃透了', desc:'深度推荐', dim:'EF', val:4}
+  ]},
+  // Q16 · A/C
+  { id:16, section:'🤝 关系', text:'你希望AI在你工作中更像什么角色？', options:[
+    {emoji:'🤫', label:'靠谱的实习生——交代什么做什么，不擅自发挥', desc:'纯执行者', dim:'AC', val:1},
+    {emoji:'💼', label:'得力的下属——理解意图、高效执行，主动提醒', desc:'主动执行者', dim:'AC', val:2},
+    {emoji:'🤝', label:'对等的同事——能和我讨论方案、互相查漏补缺', desc:'平等协作者', dim:'AC', val:3},
+    {emoji:'🎓', label:'导师型搭档——能挑战我的想法、帮我看到盲区', desc:'启发型搭档', dim:'AC', val:4}
+  ]},
+  // Q17 · I/P
+  { id:17, section:'💕 灵感', text:'一个AI的回答让你觉得"这家伙懂我"，通常是因为：', options:[
+    {emoji:'🌊', label:'给的方向完全没在我的射程里，但越想越有道理', desc:'意外之喜', dim:'IP', val:1},
+    {emoji:'🧵', label:'在我模糊的想法上串起了一条清晰的线索', desc:'梳理清晰', dim:'IP', val:2},
+    {emoji:'🗺️', label:'把我脑子里零散的碎片整理成了完整框架', desc:'结构化整合', dim:'IP', val:3},
+    {emoji:'✅', label:'格式规整、逻辑严密，我检查一遍就能直接用', desc:'交付即用', dim:'IP', val:4}
+  ]},
+  // Q18 · S/D 🔍验证题
+  { id:18, section:'🔄 磨合', text:'你和AI合作产出过特别满意的成果吗？怎么来的？', options:[
+    {emoji:'⚡', label:'试了几个方向，其中一条路越跑越顺就出活了', desc:'快速试错', dim:'SD', val:1},
+    {emoji:'🔄', label:'换了不同工具和问法，某个组合碰撞出了好结果', desc:'组合探索', dim:'SD', val:2},
+    {emoji:'🎯', label:'来回调了几轮，每一版都比上一版更接近想要的', desc:'迭代打磨', dim:'SD', val:3},
+    {emoji:'🌱', label:'多轮深度对话，像剥洋葱层层深入，远超预期', desc:'深度打磨', dim:'SD', val:4}
+  ]},
+  // Q19 · E/F
+  { id:19, section:'🌐 工具', text:'团队有一笔AI工具预算让你分配，你会：', options:[
+    {emoji:'🌐', label:'多买几款各有所长的，覆盖更多场景', desc:'广覆盖', dim:'EF', val:1},
+    {emoji:'🎪', label:'主力买一个好用的，留一点预算给大家探索', desc:'主次搭配', dim:'EF', val:2},
+    {emoji:'🏠', label:'集中买一个好用的，偶尔用免费工具补充', desc:'集中投入', dim:'EF', val:3},
+    {emoji:'🏰', label:'全部投在一个最强版本上，深度用到极致', desc:'极致深度', dim:'EF', val:4}
+  ]},
+  // Q20 · A/C
+  { id:20, section:'🤝 关系', text:'你觉得3年后，你和AI的工作关系会更像：', options:[
+    {emoji:'🔧', label:'使用更顺手的工具，本质还是我在用、它在帮', desc:'工具关系', dim:'AC', val:1},
+    {emoji:'📈', label:'高效分工，我负责创造性判断，AI负责规模化执行', desc:'分工明确', dim:'AC', val:2},
+    {emoji:'🗣️', label:'日常协作者，很多决策前习惯先和AI过一遍', desc:'日常协作', dim:'AC', val:3},
+    {emoji:'🌌', label:'边界模糊，很多想法是在人机来回碰撞中产生的', desc:'深度融合', dim:'AC', val:4}
+  ]}
+];
+
+// ==================== 16种人格完整数据 ====================
+const personalities = {
+  // ===== I(即兴) + S(速决) =====
+  'ISEA': {
+    icon:'🎢', name:'灵感探险家', tagline:'新工具追得比追剧快，灵感来了挡不住',
+    stars:3,
+    profile:'你是项目团队里的创意引擎，脑暴会上最亮的那颗星。你的天赋在于从0到1的爆破——用AI做方案发散、假设推演、多路径探索。团队依赖你在deadline前夜提供的"神来之笔"。\n\n但你的交付往往带着半成品气质——创意框架精彩，落地验证不足。评审会上被问到"这个假设的数据支撑是什么"时，你可能才意识到AI给你的happy path不够完整。\n\n协作建议：找一位IDFC型"深度共生者"搭档。你负责发散阶段制造惊喜，他负责收敛阶段建立秩序。在创新孵化项目中你会如鱼得水，但在强流程交付项目中需要搭配结构型队友。',
+    guide:'选一个常用的发散场景，刻意练习"收敛"——同一套prompt模板连续使用10次，记录效果差异，从新鲜感驱动转向效果驱动。'
+  },
+  'ISEC': {
+    icon:'🧭', name:'灵感合伙人', tagline:'快速碰撞灵感，点到为止不恋战',
+    stars:4,
+    profile:'你是效率至上的实用主义者，AI对你而言是瑞士军刀。写周报打开AI、翻译文档打开AI、润色邮件打开AI——每次交互不超过3轮，拿到可用结果就收手。你清楚什么场景AI快、什么场景人工快，从不死磕。\n\n你的核心优势是成本意识。当工具极客们在第20个新工具上注册时，你已经用熟悉的三板斧交差了。在大厂成熟项目的维护期、在资源紧张的小团队，这种"够用就好"的哲学是稀缺的生存能力。\n\n协作建议：你是团队可靠的执行者，但要避免长期待在纯执行岗位。每季度给自己一个"深耕挑战"——选一个任务，逼自己和AI磨10轮以上，记录深度打磨的额外收益。',
+    guide:'建立个人AI工具包的SOP化。不是收藏更多工具，而是把3个最高频场景的prompt模板化、版本化，在效率中积累可复用资产。'
+  },
+  'ISFA': {
+    icon:'🔬', name:'工具极客', tagline:'每个新工具都是一块新大陆，先探索再说',
+    stars:3,
+    profile:'你是AI工具世界的鉴赏家，浏览器的收藏夹是你的兵器库。同一类任务你至少测试过5个工具，能清晰分辨Claude的思维深度和Gemini的数据能力。团队选型会上你是权威，对比矩阵的专业度可以直接引用。\n\n但测评心态会侵蚀交付能力——你花50%精力找"更好的工具"，而非用现有工具产出结果。你的桌面上躺着23个未完成的测评文档，真正内化为工作流的不到3个。\n\n协作建议：把"测评"和"交付"严格分离。设定"工具探索日"（如每周五下午），其他时间锁定主力工具不动。主动承担团队AI选型的职责，但要明确这是额外贡献，不替代核心交付。',
+    guide:'从横向测评转向纵向深挖。选一个最契合你风格的工具，用它完成一个完整项目周期，产出"深度体验报告"而非"功能对比表"。'
+  },
+  'ISFC': {
+    icon:'🌊', name:'随性玩家', tagline:'什么都试试，主打一个体验丰富',
+    stars:2,
+    profile:'你是AI社交场上的游牧民族，注册过数不清的工具账号。今天用Gamma做PPT、明天用Tome、后天发现Canva的AI也不错——项目文件分散在多个平台，协作时需要多花时间对齐。\n\n你的探索欲值得尊敬，但PM岗位需要的可复现性和协作一致性是你的成长空间。当你需要交接项目时，可能发现自己的workflow是座孤岛。\n\n协作建议：采用"一进一出"原则——想试用新工具，先归档一个旧工具的数据。强迫自己把探索行为转化为团队资产：每深入一个工具，输出一份团队可用的使用指南。',
+    guide:'选定你的"主力三人组"——一个对话AI+一个文档AI+一个效率工具，签三个月"深度试用期"。这期间任何新工具诱惑都先收藏不注册，把省下的精力用于精通主力工具的高级功能。'
+  },
+  // ===== I(即兴) + D(深耕) =====
+  'IDEA': {
+    icon:'🎯', name:'精准狙击手', tagline:'出手不多，但每次都在要害上',
+    stars:5,
+    profile:'你是AI协作世界的高冷狙击手，出手次数不多，但弹无虚发。你的prompt自带专业气场：角色设定清晰、输出格式预制、边界条件锁死。团队里流传着你的传说——"那个写prompt像写需求文档的人"。\n\n你的核心能力是需求翻译。把模糊的项目诉求转化为AI可执行的精确指令是你的本能。在数据敏感型任务上表现卓越，因为你知道如何用结构约束降低AI的偏差风险。\n\n协作建议：你是团队AI规范化的标杆，主动承担"Prompt标准制定"的职责，把个人能力转化为团队资产。但在创意发散型项目中，刻意"低效"一点——故意不留完美预设，看看AI会带你去哪里。',
+    guide:'系统学习思维链提示（Chain-of-Thought）和递归提示技术，把"单发狙击"升级为"连发点射"——在保持精准的同时处理更复杂的推理链条。'
+  },
+  'IDEC': {
+    icon:'🔗', name:'契约工匠', tagline:'和AI建立稳定协作模式，交付靠谱',
+    stars:5,
+    profile:'你与AI建立了清晰的服务协议——什么时候用它、预期什么质量、输出格式如何、异常怎么处理，一切可预期。团队找你协作最省心，因为你知道如何把AI纳入标准作业程序。\n\n你的prompt库有版本管理，AI输出有质量检核清单，人机分工边界清晰。在需要严格流程管控的复杂项目中，你是唯一能拿出完整AI使用说明的PM。\n\n协作建议：你是团队的"定海神针"，但要确保有一个"快速响应模式"——区分"基础设施投入"和"临时任务处理"，后者允许打破流程、灵活操作。',
+    guide:'探索"人机协作"而非"人机分工"的更高阶形态。设计一个需要你和AI实时互动、相互修正的任务流程，而非输入-输出的批量模式。'
+  },
+  'IDFA': {
+    icon:'🏗️', name:'系统构建师', tagline:'不光用工具，更喜欢亲手搭系统',
+    stars:4,
+    profile:'你是PM里的技术派，不满足于使用现成工具，要亲手搭建系统。你用自动化工具搭了"进度监控-摘要-预警"工作流，可能还在本地跑过开源模型。\n\n你的价值在于系统性降本——前期投入的工程时间，后期以数倍效率回收。当重复性工作被你的系统接管后，你把精力集中在真正的策略判断上。\n\n协作建议：确保始终有"业务交付"的紧箍咒。每个工程化项目启动前，书面回答"手动替代方案耗时多少？低于阈值不准过度工程化"。',
+    guide:'学习产品化思维——把你的内部工具抽象为可复用的产品模块，思考"如果要把这个自动化流程推广到其他团队，怎么包装"。从自我服务转向用户视角。'
+  },
+  'IDFC': {
+    icon:'🌌', name:'深度共生者', tagline:'人机边界模糊，AI是思维的延伸',
+    stars:5,
+    profile:'你是人机协作的终极探索者。你们的对话历史可能是团队最长的，AI了解你的思维习惯、行业语境。对你来说，AI不是工具，是外接大脑——你的知识、记忆、部分决策能力已经分布式存储在人机系统中。\n\n你在深度项目分析上无人能敌。一份复盘报告，你会和AI进行50轮以上交互，逐步构建认知框架、验证假设、修正偏见。最终成果融合了人类洞察和机器算力。\n\n协作建议：你是团队的AI探索先锋，但要成为"可扩展的先锋"。把深度协作经验提炼为可传授的方法论——比如"如何用20轮对话构建一个项目分析框架"。',
+    guide:'向"多模型共生"进化。不要和单一AI过度绑定，建立跨平台的"认知备份"——同一领域知识，确保在2-3个主流AI中都能有效唤醒和使用。'
+  },
+  // ===== P(结构) + S(速决) =====
+  'PSEA': {
+    icon:'🗺️', name:'框架探险家', tagline:'有框架地探索前沿，创新也有章法',
+    stars:3,
+    profile:'你是AIGC时代的理性游民，探索前沿但不失控。你的产出充满新意——用AI视频工具做项目Demo、用AI音频工具做汇报配音。在需要创新的路演和品牌场景，你是团队的秘密武器。\n\n你比ISEA"灵感探险家"多了一层框架意识，知道如何把前沿探索约束在可交付的范围内。\n\n协作建议：定位自己为"创新催化剂"。主动和系统构建师型同事组队——你带回前沿可能，他们负责把可能变成可行。',
+    guide:'选一个你最擅长的AI能力，完成一个完整的"从概念到交付"项目，亲手经历工程化落地的全部环节，补齐从"知道能做到什么"到"能做到且做得划算"的认知。'
+  },
+  'PSEC': {
+    icon:'🎭', name:'多面协作者', tagline:'善于让多个AI各司其职，组合出奇迹',
+    stars:4,
+    profile:'你是AI Agent编排的实践者，热衷于设计"多智能体协作"。你的项目计划可能是这样的：让AI-A扮演风险分析师识别风险，AI-B做影响评估，AI-C生成应对方案，你来做最终决策。\n\n你的前瞻视野让你在复杂任务分解上领先一步。当单一AI的回答越来越长、越来越平庸时，你用"分而治之"保持输出质量。\n\n协作建议：你的能力适合AI原生项目，避免在传统系统的AI改造中过度设计。每个多agent流程上线前，确保单agent的简单方案已经无法满足。',
+    guide:'系统学习多智能体系统的故障模式——冲突解决、循环依赖、单点故障。让你的编排能力从"能跑demo"进化到"生产可用"。'
+  },
+  'PSFA': {
+    icon:'📊', name:'数据信仰者', tagline:'你说的都对，但让我先用数据验证一下',
+    stars:5,
+    profile:'你是数据驱动PM和AI结合的典范。你的AI使用过程本身就是在做实验——同时用3个模型跑方案、AB测试看效果、统计学方法选胜者。\n\n你在项目优化和效率提升场景不可替代。团队内的数据驱动文化由你建立，AI对你的价值是"快速生成实验素材"，而你的核心价值是"设计实验、解读结果、迭代假设"。\n\n协作建议：你是项目团队的核心里程碑，但要主动引入"定性的声音"——定期也有不做数据测试的"手感驱动"项目，保持对直觉的敏感度。',
+    guide:'把AI引入实验的更早阶段——不仅生成测试素材，还辅助设计实验方案、自动化结果分析，构建"AI增强型项目优化飞轮"。'
+  },
+  'PSFC': {
+    icon:'🛠️', name:'定制大师', tagline:'通用AI不够用？那就自己调一个出来',
+    stars:4,
+    profile:'你不满足于通用模型，要"造一个懂我业务"的AI。你的实践包括：用公司历史文档构建知识库、训练专属模型、打造符合团队规范的AI工具。\n\n你的产出在垂直场景有显著优势。通用AI写不出行业黑话，不懂团队微妙偏好——而你解决的正是这些问题。\n\n协作建议：把定制方向从"全栈自研"转向"关键差异化"。只做通用模型明显做不好、且对公司核心竞争力至关重要的部分，其他场景直接用API。',
+    guide:'建立"模型能力追踪仪表盘"——持续监控自研方案与最新通用模型的能力差距，设定评估周期，避免在沉没成本中无限投入。'
+  },
+  // ===== P(结构) + D(深耕) =====
+  'PDEA': {
+    icon:'🎨', name:'核心创作者', tagline:'主力工具用得炉火纯青，偶尔跨界采风',
+    stars:4,
+    profile:'你在核心工具上积累了深厚的隐性知识——知道它的边界在哪里、什么时候该人工介入、如何让输出符合规范。你的主力工具可能用了很久，快捷键肌肉记忆深刻。\n\n你的优势是深度+节制的平衡。不盲目追新，但保持对行业变化的敏锐。在需要稳定输出质量的交付场景，你是最可靠的。\n\n协作建议：你是团队工具选型的"稳定器"，可以承担"工具策略委员会"职责，制定团队级的工具采用标准。',
+    guide:'做一次"工具断舍离实验"——选一个使用超过一年的主力工具，用新出的竞品完全替代一个月，记录体验差异。刷新对"沉没成本"和"真实需求"的认知。'
+  },
+  'PDEC': {
+    icon:'☕', name:'晨光陪伴者', tagline:'工具融入日常，润物细无声的默契',
+    stars:5,
+    profile:'你的AI使用不轰轰烈烈，而是渗透在每个工作日的日常——打开AI帮你续写昨日未完成的思考、整理今日待办、润色即将发送的邮件。\n\n当工具使用深入骨髓，你自然成为团队知识的枢纽——你知道文档在哪里、模板怎么调、历史版本怎么追溯。你是组织知识管理的理想负责人。\n\n协作建议：发挥你的"整合者"角色，把新工具探索交给团队里的E型伙伴，你负责把验证有效的工具纳入现有体系。主动承担团队知识管理和新人引导。',
+    guide:'在现有工具链中植入一个"变异实验"——每周用一个你从未尝试过的AI功能，记录是否改变了工作流。保持深度使用的优势，但打破"只按老路使用"的惯性。'
+  },
+  'PDFA': {
+    icon:'🏰', name:'忠诚守护者', tagline:'认准了就不换，深度就是我的竞争力',
+    stars:3,
+    profile:'你对主力工具的忠诚度让团队感到踏实——你用它的全部功能、参加它的一切活动、内部推行它的使用规范。你的稳定性是团队的锚点。\n\n在标准化推广场景你有独特价值：当公司决定全员使用某AI套件时，你是最佳布道师，因为你真的相信。\n\n协作建议：把你的忠诚转化为"深度用户洞察"——因为对产品足够了解，你可以成为团队研究该平台AI策略的专家。但同时，每季度必须深度使用一个直接竞品，保持理性对比的能力。',
+    guide:'尝试"工具替换实验"——选一个紧急任务，故意不用主力工具、用全新方案完成。记录过程中的痛苦点和意外发现。'
+  },
+  'PDFC': {
+    icon:'🌳', name:'古树守望者', tagline:'稳如磐石，不追风口，时间是最好的验证',
+    stars:2,
+    profile:'你是AI世界里的长跑选手，不追风口、不盲从热点。"新模型？够用就行。""新技术？等稳定了再说。"你的绝对稳定让团队在变化中感到安心。\n\n在特定场景下你的价值突出：对稳定性要求极高的核心项目、需要长期维护的成熟产品线、团队协作规范尚未统一的过渡期——你的保守是项目质量的缓冲。\n\n协作建议：明确你的定位是"质量守护者"而非"创新推动者"。在需要长期稳定交付的成熟项目中你能发光。在新业务探索中，搭配激进型伙伴形成制衡。',
+    guide:'每半年做一次"技术债务盘点"——列出因为坚持旧方案而多花费的时间、错过的功能、导致的协作摩擦。量化"稳定"的真实成本，让保守从直觉变成有据可依的选择。'
+  }
+};
+
+// ==================== 应用状态 ====================
+let currentPage = 'home';
+let currentQuestion = 0;
+let answers = {}; // { IP: [1,2,3,4,2], SD: [...], EF: [...], AC: [...] }
+let selectedOption = null;
+
+// ==================== 页面导航 ====================
+function showPage(pageName) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + pageName).classList.add('active');
+  currentPage = pageName;
+  window.scrollTo(0, 0);
+}
+
+// ==================== 粒子背景 ====================
+function createParticles() {
+  const container = document.getElementById('particles');
+  const hearts = ['💕', '✨', '🌸', '💖', '💗', '🩷', '💝', '🌷', '🫧', '💫'];
+  for (let i = 0; i < 20; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+    p.style.left = Math.random() * 100 + '%';
+    p.style.animationDuration = (Math.random() * 12 + 8) + 's';
+    p.style.animationDelay = (Math.random() * 12) + 's';
+    p.style.opacity = (Math.random() * 0.3 + 0.1);
+    container.appendChild(p);
+  }
+}
+
+// ==================== Toast ====================
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2000);
+}
+
+// ==================== 答题逻辑 ====================
+function startQuiz() {
+  currentQuestion = 0;
+  answers = { IP: [], SD: [], EF: [], AC: [] };
+  selectedOption = null;
+  showPage('quiz');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = questions[currentQuestion];
+  selectedOption = null;
+  document.getElementById('question-section').textContent = q.section;
+  document.getElementById('question-text').textContent = q.text;
+  document.getElementById('progress-text').textContent = (currentQuestion + 1) + '/20';
+  document.getElementById('progress-bar').style.width = ((currentQuestion + 1) / 20 * 100) + '%';
+  document.getElementById('btn-back').style.visibility = currentQuestion > 0 ? 'visible' : 'hidden';
+  const optionsList = document.getElementById('options-list');
+  optionsList.innerHTML = '';
+  q.options.forEach((opt, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerHTML = `<span class="option-emoji">${opt.emoji}</span><div class="option-content"><div class="option-label">${opt.label}</div><div class="option-desc">${opt.desc}</div></div>`;
+    btn.onclick = () => selectOption(idx, opt);
+    optionsList.appendChild(btn);
+  });
+}
+
+function selectOption(idx, opt) {
+  if (selectedOption) return; // 防止重复点击
+  selectedOption = { idx, opt };
+  document.querySelectorAll('.option-btn').forEach((btn, i) => btn.classList.toggle('selected', i === idx));
+  // 选中后自动跳下一题
+  setTimeout(() => {
+    const dim = opt.dim;
+    const val = opt.val;
+    if (!answers[dim]) answers[dim] = [];
+    answers[dim].push(val);
+    if (currentQuestion < 19) {
+      currentQuestion++;
+      renderQuestion();
+    } else {
+      calculateResult();
+    }
+  }, 400);
+}
+
+function nextQuestion() {
+  // 保留函数以防其他地方引用，实际已通过selectOption自动跳转
+}
+
+function prevQuestion() {
+  if (currentQuestion > 0) {
+    const prevQ = questions[currentQuestion - 1];
+    const prevDim = prevQ.options[0].dim;
+    if (answers[prevDim] && answers[prevDim].length > 0) answers[prevDim].pop();
+    currentQuestion--;
+    renderQuestion();
+  }
+}
+
+// ==================== 计分逻辑 ====================
+function calculateResult() {
+  const dims = ['IP', 'SD', 'EF', 'AC'];
+  const dimConfig = {
+    'IP': { leftKey: 'I', rightKey: 'P', leftName: '即兴派', rightName: '结构派' },
+    'SD': { leftKey: 'S', rightKey: 'D', leftName: '速决派', rightName: '深耕派' },
+    'EF': { leftKey: 'E', rightKey: 'F', leftName: '广撒网派', rightName: '聚焦派' },
+    'AC': { leftKey: 'A', rightKey: 'C', leftName: '主导派', rightName: '协作派' }
+  };
+  const scores = {};
+  const verifyFlags = {}; // 验证标记
+
+  dims.forEach(dim => {
+    const vals = answers[dim] || [];
+    const totalScore = vals.reduce((a, b) => a + b, 0);
+    const avgScore = vals.length > 0 ? totalScore / vals.length : 2.5;
+    const { leftKey, rightKey, leftName, rightName } = dimConfig[dim];
+
+    let winner, pct;
+    if (avgScore <= 2.2) {
+      winner = leftKey;
+      pct = Math.round((3 - avgScore) / 2 * 100);
+    } else if (avgScore >= 2.8) {
+      winner = rightKey;
+      pct = Math.round((avgScore - 2) / 2 * 100);
+    } else {
+      winner = 'X'; // 混合型
+      pct = 50;
+    }
+
+    // 验证检查
+    let verifyNote = '';
+    if (dim === 'IP' && vals.length >= 5) {
+      const diff13 = Math.abs(vals[0] - vals[3]); // Q1 vs Q13
+      const diff917 = Math.abs(vals[2] - vals[4]); // Q9 vs Q17
+      if (diff13 >= 3 || diff917 >= 3) {
+        winner = 'X';
+        verifyNote = '🌊 动态探索中';
+      }
+    }
+    if (dim === 'SD' && vals.length >= 5) {
+      const diff618 = Math.abs(vals[1] - vals[4]); // Q6 vs Q18
+      const diff210 = Math.abs(vals[0] - vals[2]); // Q2 vs Q10
+      if (diff618 >= 3 || diff210 >= 3) {
+        winner = 'X';
+        verifyNote = '🌊 动态探索中';
+      }
+    }
+    if (dim === 'EF' && vals.length >= 5) {
+      const diff311 = Math.abs(vals[0] - vals[2]); // Q3 vs Q11
+      const diff719 = Math.abs(vals[1] - vals[3]); // Q7 vs Q19
+      if (diff311 >= 3 || diff719 >= 3) {
+        winner = 'X';
+        verifyNote = '🌊 动态探索中';
+      }
+    }
+    if (dim === 'AC' && vals.length >= 5) {
+      const diff816 = Math.abs(vals[1] - vals[3]); // Q8 vs Q16
+      const diff1220 = Math.abs(vals[2] - vals[4]); // Q12 vs Q20
+      if (diff816 >= 3 || diff1220 >= 3) {
+        winner = 'X';
+        verifyNote = '🌊 动态探索中';
+      }
+    }
+
+    scores[dim] = { winner, leftKey, rightKey, avgScore, pct, leftName, rightName, verifyNote };
+    verifyFlags[dim] = verifyNote;
+  });
+
+  // 生成人格代码
+  let code = '';
+  dims.forEach(dim => {
+    code += scores[dim].winner;
+  });
+
+  // 如果包含X，尝试匹配最接近的人格
+  if (code.includes('X')) {
+    code = findClosestPersonality(scores);
+  }
+
+  showResult(code, scores, verifyFlags);
+}
+
+function findClosestPersonality(scores) {
+  const dims = ['IP', 'SD', 'EF', 'AC'];
+  const dimConfig = {
+    'IP': { leftKey: 'I', rightKey: 'P' },
+    'SD': { leftKey: 'S', rightKey: 'D' },
+    'EF': { leftKey: 'E', rightKey: 'F' },
+    'AC': { leftKey: 'A', rightKey: 'C' }
+  };
+  let code = '';
+  dims.forEach(dim => {
+    if (scores[dim].winner === 'X') {
+      code += scores[dim].avgScore <= 2.5 ? dimConfig[dim].leftKey : dimConfig[dim].rightKey;
+    } else {
+      code += scores[dim].winner;
+    }
+  });
+  return code;
+}
+
+// ==================== 搭子推荐 ====================
+function findPartner(myCode, scores) {
+  const dims = ['IP', 'SD', 'EF', 'AC'];
+  const opposites = {
+    'IP': { left: 'I', right: 'P', leftName: '即兴派', rightName: '结构派' },
+    'SD': { left: 'S', right: 'D', leftName: '速决派', rightName: '深耕派' },
+    'EF': { left: 'E', right: 'F', leftName: '广撒网派', rightName: '聚焦派' },
+    'AC': { left: 'A', right: 'C', leftName: '主导派', rightName: '协作派' }
+  };
+
+  // 找到最极端的维度（偏离中位数2.5最远）
+  let maxDiff = 0;
+  let flipDim = 'IP';
+  dims.forEach(dim => {
+    const diff = Math.abs(scores[dim].avgScore - 2.5);
+    if (diff > maxDiff) { maxDiff = diff; flipDim = dim; }
+  });
+
+  const opp = opposites[flipDim];
+  const mySide = scores[flipDim].avgScore <= 2.5 ? 'left' : 'right';
+  const partnerSide = mySide === 'left' ? 'right' : 'left';
+  const mySideName = opp[mySide + 'Name'];
+  const partnerSideName = opp[partnerSide + 'Name'];
+
+  // 构造搭子代码：翻转最极端维度
+  let partnerCode = '';
+  dims.forEach(dim => {
+    if (dim === flipDim) {
+      partnerCode += opp[partnerSide];
+    } else {
+      partnerCode += myCode[dims.indexOf(dim)];
+    }
+  });
+
+  const partner = personalities[partnerCode];
+  if (!partner) return null;
+
+  const reasonMap = {
+    'IP': `你在"怎么开口"上偏${mySideName}，搭子偏${partnerSideName}——你负责发散灵感，搭子负责收敛落地，项目方案既有创意又能交付。`,
+    'SD': `你在"怎么打磨"上偏${mySideName}，搭子偏${partnerSideName}——你快速试错找到方向，搭子深度打磨保证质量，互补出奇迹。`,
+    'EF': `你在"工具选择"上偏${mySideName}，搭子偏${partnerSideName}——你开拓视野发现好工具，搭子帮你聚焦深耕，探索与深度兼得。`,
+    'AC': `你在"AI角色"上偏${mySideName}，搭子偏${partnerSideName}——你掌控方向确保不跑偏，搭子帮你打开思路发现更多可能。`
+  };
+
+  return {
+    code: partnerCode,
+    icon: partner.icon,
+    name: partner.name,
+    youDesc: `偏${mySideName}`,
+    partnerDesc: `偏${partnerSideName}`,
+    reason: reasonMap[flipDim]
+  };
+}
+
+// ==================== 结果展示 ====================
+function showResult(code, scores, verifyFlags) {
+  const p = personalities[code];
+  if (!p) {
+    console.error('❌ 找不到人格代码:', code, '可用:', Object.keys(personalities));
+    showToast('结果计算异常，请重试 (code:' + code + ')');
+    return;
+  }
+  showPage('result');
+
+  // 基本信息
+  document.getElementById('result-icon').textContent = p.icon;
+  document.getElementById('result-code').textContent = code;
+  document.getElementById('result-name').textContent = p.icon + ' ' + p.name;
+  document.getElementById('result-tagline').textContent = '「' + p.tagline + '」';
+
+  // 维度分析
+  const dimClasses = { 'IP': 'ip', 'SD': 'sd', 'EF': 'ef', 'AC': 'ac' };
+  let dimHTML = '';
+  for (const dim of ['IP', 'SD', 'EF', 'AC']) {
+    const s = scores[dim];
+    const isLeft = s.winner === s.leftKey;
+    const isMixed = s.winner === 'X';
+    const barPct = s.pct;
+    const displayWinner = isMixed ? '混合型' : (isLeft ? s.leftName : s.rightName);
+    dimHTML += `
+      <div class="dimension-row">
+        <span class="dimension-label">${displayWinner}</span>
+        <div class="dimension-bar-wrap"><div class="dimension-bar ${dimClasses[dim]}" style="width:${barPct}%"></div></div>
+        <span class="dimension-pct">${barPct}%</span>
+      </div>
+      <div class="dimension-ends"><span>${s.leftName}</span><span>${s.rightName}</span></div>
+    `;
+    if (s.verifyNote) {
+      dimHTML += `<div class="dimension-note">${s.verifyNote}</div>`;
+    }
+  }
+  document.getElementById('dimensions-container').innerHTML = dimHTML;
+
+  // 风格画像
+  document.getElementById('profile-content').innerHTML = p.profile.replace(/\n/g, '<br>');
+
+  // 搭子推荐
+  const partner = findPartner(code, scores);
+  if (partner) {
+    document.getElementById('partner-content').innerHTML = `
+      <div class="partner-pair">
+        <div class="partner-person">
+          <span class="partner-person-icon">${p.icon}</span>
+          <div class="partner-person-code">${code}</div>
+          <div class="partner-person-name">${p.name}</div>
+          <div class="partner-person-desc">${partner.youDesc}</div>
+        </div>
+        <div class="partner-arrow">🤝</div>
+        <div class="partner-person">
+          <span class="partner-person-icon">${partner.icon}</span>
+          <div class="partner-person-code">${partner.code}</div>
+          <div class="partner-person-name">${partner.name}</div>
+          <div class="partner-person-desc">${partner.partnerDesc}</div>
+        </div>
+      </div>
+      <div class="partner-reason">💡 ${partner.reason}</div>
+    `;
+  }
+
+  // 成长建议
+  document.getElementById('guide-content').textContent = p.guide;
+
+  // 存储结果
+  window._resultData = { code, personality: p, scores, verifyFlags };
+  saveResult(code, p, scores, verifyFlags);
+  updateAdminPanel();
+
+  // 隐藏入口：连续点击结果页标题5次打开管理面板
+  let clickCount = 0;
+  const badge = document.querySelector('.result-badge');
+  if (badge) {
+    badge.style.cursor = 'default';
+    badge.onclick = function() {
+      clickCount++;
+      if (clickCount >= 5) {
+        clickCount = 0;
+        const panel = document.getElementById('admin-panel');
+        panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+        showToast(panel.style.display === 'block' ? '🔓 管理面板已打开' : '🔒 管理面板已隐藏');
+      }
+      setTimeout(() => { clickCount = 0; }, 2000);
+    };
+  }
+}
+
+// ==================== 数据存储与导出 ====================
+// 小易问卷地址
+const SURVEY_URL = 'https://survey.hz.netease.com/htmls/q5oiyy/paper_internal.html';
+
+function saveResult(code, personality, scores, verifyFlags) {
+  // 获取用户填写的姓名和部门
+  const userName = document.getElementById('user-name')?.value?.trim() || '';
+  const userDept = document.getElementById('user-dept')?.value?.trim() || '';
+  
+  const data = {
+    timestamp: new Date().toISOString(),
+    code: code,
+    name: personality.name,
+    stars: personality.stars,
+    scores: {
+      IP: scores['IP'].winner + '(' + Math.round(scores['IP'].avgScore * 10) / 10 + ')',
+      SD: scores['SD'].winner + '(' + Math.round(scores['SD'].avgScore * 10) / 10 + ')',
+      EF: scores['EF'].winner + '(' + Math.round(scores['EF'].avgScore * 10) / 10 + ')',
+      AC: scores['AC'].winner + '(' + Math.round(scores['AC'].avgScore * 10) / 10 + ')'
+    },
+    verifyFlags: verifyFlags,
+    userName: userName,
+    userDept: userDept
+  };
+  console.log('📊 测评结果:', data);
+
+  // 保存到localStorage
+  try {
+    const history = JSON.parse(localStorage.getItem('ai_personality_test_history') || '[]');
+    history.push(data);
+    localStorage.setItem('ai_personality_test_history', JSON.stringify(history));
+  } catch(e) {
+    console.log('本地存储失败:', e);
+  }
+}
+
+function updateAdminPanel() {
+  try {
+    const history = JSON.parse(localStorage.getItem('ai_personality_test_history') || '[]');
+    document.getElementById('stat-total').textContent = history.length;
+    const types = new Set(history.map(h => h.code));
+    document.getElementById('stat-types').textContent = types.size;
+  } catch(e) {}
+}
+
+function exportCSV() {
+  try {
+    const history = JSON.parse(localStorage.getItem('ai_personality_test_history') || '[]');
+    if (history.length === 0) { showToast('暂无数据可导出'); return; }
+    let csv = '\uFEFF时间,姓名,部门,人格代码,人格名称,适配指数,IP维度,SD维度,EF维度,AC维度,验证标记\n';
+    history.forEach(h => {
+      const vf = h.verifyFlags || {};
+      const flags = [vf.IP, vf.SD, vf.EF, vf.AC].filter(f => f).join(';') || '正常';
+      const userName = h.userName || '匿名';
+      const userDept = h.userDept || '-';
+      csv += `${h.timestamp},${userName},${userDept},${h.code},${h.name},${h.stars},${h.scores.IP},${h.scores.SD},${h.scores.EF},${h.scores.AC},${flags}\n`;
+    });
+    downloadFile(csv, 'AI应用人格测评结果.csv', 'text/csv;charset=utf-8');
+    showToast('✅ CSV已下载！');
+  } catch(e) {
+    showToast('导出失败');
+  }
+}
+
+function exportJSON() {
+  try {
+    const history = JSON.parse(localStorage.getItem('ai_personality_test_history') || '[]');
+    if (history.length === 0) { showToast('暂无数据可导出'); return; }
+    downloadFile(JSON.stringify(history, null, 2), 'AI应用人格测评结果.json', 'application/json');
+    showToast('✅ JSON已下载！');
+  } catch(e) {
+    showToast('导出失败');
+  }
+}
+
+function downloadFile(content, filename, mimeType) {
+  const blob = new Blob([content], { type: mimeType });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function clearData() {
+  if (confirm('确定要清除所有本地测评数据吗？此操作不可恢复。')) {
+    localStorage.removeItem('ai_personality_test_history');
+    updateAdminPanel();
+    showToast('🗑️ 本地数据已清除');
+  }
+}
+
+// ==================== 分享功能 ====================
+function shareResult() {
+  if (!window._resultData) return;
+  const { code, personality } = window._resultData;
+  document.getElementById('poster-icon').textContent = personality.icon;
+  document.getElementById('poster-code').textContent = code;
+  document.getElementById('poster-name').textContent = personality.icon + ' ' + personality.name;
+  document.getElementById('modal-share').classList.add('active');
+}
+
+function closeShareModal() {
+  document.getElementById('modal-share').classList.remove('active');
+}
+
+function copyShareText() {
+  if (!window._resultData) return;
+  const { code, personality } = window._resultData;
+  const shareText = `🧠 我在「520 · AI应用人格测评」中测出了：\n${personality.icon} ${code} · ${personality.name}\n「${personality.tagline}」\n\n你和AI的日常，自带什么风格Buff？\n👉 点击链接来测测你的AI应用人格`;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(shareText).then(() => {
+      showToast('✅ 分享文案已复制，去粘贴给朋友吧！');
+      closeShareModal();
+    });
+  } else {
+    showToast('📋 请长按手动复制分享文案');
+  }
+}
+
+function retakeQuiz() {
+  if (confirm('确定要重新测评吗？当前结果将保留在历史记录中。')) {
+    currentQuestion = 0;
+    answers = { IP: [], SD: [], EF: [], AC: [] };
+    selectedOption = null;
+    window._resultData = null;
+    startQuiz();
+  }
+}
+
+// ==================== 跳转到小易问卷（自动复制结果摘要） ====================
+function submitToSurvey() {
+  if (!window._resultData) return;
+  const { code, personality, scores } = window._resultData;
+  
+  // 获取用户填写的姓名和部门
+  const userName = document.getElementById('user-name')?.value?.trim() || '未填写';
+  const userDept = document.getElementById('user-dept')?.value?.trim() || '未填写';
+  
+  // 生成结果摘要
+  const summary = [
+    '【AI应用人格测评结果】',
+    '姓名：' + userName,
+    '部门：' + userDept,
+    '人格代码：' + code,
+    '人格类型：' + personality.name,
+    '适配指数：' + '⭐'.repeat(personality.stars) + '（' + personality.stars + '/5）',
+    '一句话：' + personality.tagline,
+    'IP（直觉共情）：' + scores.IP.winner + ' ' + Math.round(scores.IP.avgScore * 10) / 10 + '分',
+    'SD（系统建构）：' + scores.SD.winner + ' ' + Math.round(scores.SD.avgScore * 10) / 10 + '分',
+    'EF（效率驱动）：' + scores.EF.winner + ' ' + Math.round(scores.EF.avgScore * 10) / 10 + '分',
+    'AC（自主协作）：' + scores.AC.winner + ' ' + Math.round(scores.AC.avgScore * 10) / 10 + '分'
+  ].join('\n');
+  
+  // 复制到剪贴板
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(summary).then(() => {
+      showToast('✅ 结果已复制到剪贴板，请在问卷中 Ctrl+V 粘贴');
+    }).catch(() => {
+      showToast('📋 复制失败，请手动截图保存结果');
+    });
+  } else {
+    showToast('📋 请截图保存结果，手动填写到问卷中');
+  }
+  
+  // 延迟打开问卷，确保 toast 可见
+  setTimeout(() => {
+    window.open(SURVEY_URL, '_blank');
+  }, 800);
+}
+
+// ==================== 初始化 ====================
+createParticles();
+document.getElementById('modal-share').addEventListener('click', function(e) {
+  if (e.target === this) closeShareModal();
+});
+console.log('🧠 520 · 测测你的AI应用人格');
+console.log('📊 20道题 | 16种AI应用人格 | 每题4选项（灰度递进）');
+console.log('💾 数据自动保存到浏览器本地存储，可在结果页导出CSV/JSON');
+console.log('📋 提交结果将跳转到小易问卷');
+</script>
+</body>
+</html>
